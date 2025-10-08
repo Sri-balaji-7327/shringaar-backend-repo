@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:5173',
-      'https://sbgs.ap-south-1.elasticbeanstalk.com',
+      'https://shringaar-frontend-repo.onrender.com',
       // Add your production frontend if needed
     ],
     methods: ['GET', 'POST', 'OPTIONS'],
@@ -37,7 +37,7 @@ if (process.env.GOOGLE_SERVICE_KEY_BASE64) {
     Buffer.from(process.env.GOOGLE_SERVICE_KEY_BASE64, 'base64')
   )
 } else {
-  keyFilePath = path.join(__dirname, 'shringaar-key-file.json')
+  keyFilePath = path.join(__dirname, '../shringaar-key-file.json')
 }
 
 const Auth = new google.auth.GoogleAuth({
@@ -78,6 +78,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/sheet', async (req, res) => {
   const { code } = req.query
+  console.log(code, 'code')
   if (!code) return res.status(400).json({ error: 'Product code is required' })
 
   const product = await searchCodeData(code)
