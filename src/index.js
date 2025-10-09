@@ -25,7 +25,7 @@ app.use(
 app.use(express.json())
 
 const SHEET_ID = process.env.SHEET_ID
-const CELL = process.env.EDIT_RANGE
+const EDIT_RANGE = process.env.EDIT_RANGE
 const GETRANGE = process.env.GET_RANGE
 
 let keyFilePath
@@ -52,7 +52,7 @@ async function searchCodeData(code) {
 
     await sheetsClient.spreadsheets.values.update({
       spreadsheetId: SHEET_ID,
-      range: CELL,
+      range: EDIT_RANGE,
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [[code]],
