@@ -9,7 +9,11 @@ const fs = require('fs');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
+
+// Disable Express ETag caching
+app.set('etag', false)
+
 
 // =====================================
 // MIDDLEWARE
@@ -27,6 +31,19 @@ app.use(
 );
 
 app.use(express.json());
+
+// middleware control
+
+app.use('/api', (req, res, next) => {
+  res.set({
+    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+    Pragma: 'no-cache',
+    Expires: '0',
+    'Surrogate-Control': 'no-store',
+  })
+
+  next()
+})
 
 // =====================================
 // ENVIRONMENT CONFIGURATION
